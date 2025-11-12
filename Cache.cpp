@@ -21,44 +21,46 @@ public:
         data.resize(size, -1); // -1은 빈 공간 표시
     }
 
-    void insert(int value)
-    {
-        // 빈 공간이 있으면 그 자리에 넣기
-        for (int i = 0; i < data.size(); i++)
-        {
-            if (data[i] == -1) // -1은 빈 슬롯
-            {
-                data[i] = value;
-                return; // 삽입 완료하면 함수 종료
-            }
-        }
-
-        // 빈 공간이 없다면 FIFO 방식으로 처리: 한 칸씩 밀기
-        for (int i = 1; i < data.size(); i++)
-        {
-            data[i - 1] = data[i];
-        }
-
-        // 마지막 칸에 새 값을 넣기
-        data[data.size() - 1] = value;
-    }
-
     bool access(int value)
     {
         for (int i = 0; i < data.size(); i++)
         {
             if (data[i] == value)
             {
-                cout << "Hit! " << value << " is already in cache." << endl;
-                return true; // 캐시 히트
+                cout << "Hit! " << value << " is already in cache (LRU update)" << endl;
+
+                int temp = data[i]; // 해당 값을 저장
+
+                // 사용했으므로 해당 값을 맨 뒤(최신 위치)로 이동
+                data.erase(data.begin() + i);
+                data.push_back(temp);
+
+                return true;
             }
         }
 
-        // 캐시 미스
-        cout << "Miss! inserting " << value << " into cache." << endl;
-        insert(value);
+        // Miss
+        cout << "Miss! inserting " << value << " into cache (LRU)" << endl;
 
+        insert(value);
         return false;
+    }
+
+    void insert(int value)
+    {
+        // 빈 공간이 있으면 거기 넣기
+        for (int i = 0; i < data.size(); i++)
+        {
+            if (data[i] == -1)
+            {
+                data[i] = value;
+                return;
+            }
+        }
+
+        // 빈 공간이 없다면 LRU 방식으로 가장 오래된 데이터를 제거하고 넣기
+        data.erase(data.begin()); // 첫 번째(가장 오래된) 제거
+        data.push_back(value);    // 새 값을 가장 최근 위치에 추가
     }
 };
 
@@ -66,12 +68,13 @@ int main()
 {
     Cache cache(4); // 캐시 사이즈: 4
 
-    cache.access(10); // Miss → [10, -1, -1, -1]
-    cache.access(20); // Miss → [10, 20, -1, -1]
-    cache.access(10); // Hit →  [10, 20, -1, -1]
-    cache.access(30); // Miss → [10, 20, 30, -1]
-    cache.access(40); // Miss → [10, 20, 30, 40]
-    cache.access(50); // Miss → FIFO 교체 → [20, 30, 40, 50]
+    cache.access(10); // [10, -1, -1, -1]
+    cache.access(20); // [10, 20, -1, -1]
+    cache.access(30); // [10, 20, 30, -1]
+    cache.access(10); // Hit! → [20, 30, 10, -1]
+    cache.access(40); // [20, 30, 10, 40]
+    cache.access(30); // Hit! → [20, 10, 40, 30]
+    cache.access(50); // Miss → 가장 오래된 20 제거 → [10, 40, 30, 50]
 
     cout << "\nCurrent cache: ";
     for (int val : cache.data)
