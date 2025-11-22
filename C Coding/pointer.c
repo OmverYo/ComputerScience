@@ -2,6 +2,8 @@
 
 int main()
 {
+    // Memory Address
+
     int myAge = 26;
     printf("%d\n", myAge);  // Outputs 26
     printf("%p\n", &myAge); // Outputs 00000000005FFE7C
@@ -20,6 +22,10 @@ int main()
     int* myNum;
     int *myNum;
     */
+
+    printf("\n------------------------\n\n");
+
+    // Pointers and Arrays
 
     int myNumbers[4] = {10, 20, 30, 40};
     int i;
@@ -49,6 +55,92 @@ int main()
     *(myNumbers + 1) = 17;
     printf("%d\n", *myNumbers);       // Outputs 13
     printf("%d\n", *(myNumbers + 1)); // Outputs 17
+
+    printf("\n------------------------\n\n");
+
+    // Pointer Arithmetic
+
+    int myNumbers1[4] = {10, 20, 30, 40};
+    int *p1 = myNumbers1; // Points to myNumbers[0]
+
+    printf("%d\n", *p1);       // Outputs 10
+    printf("%d\n", *(p1 + 1)); // Outputs 20
+    printf("%d\n", *(p1 + 2)); // Outputs 30
+    printf("%d\n", *(p1 + 3)); // Outputs 40
+
+    printf("\n------------------------\n\n");
+
+    // Moving the pointer with increment and decrement operators
+
+    int myNumbers2[3] = {10, 20, 30};
+    int *p2 = myNumbers2; // myNumbers[0]
+
+    printf("%d\n", *p2); // 10
+    p2++;                // move to myNumbers[1]
+    printf("%d\n", *p2); // 20
+    p2--;                // back to myNumbers[0]
+    printf("%d\n", *p2); // 10
+    p2 += 2;             // jump to myNumbers[2]
+    printf("%d\n", *p2); // 30
+
+    printf("\n------------------------\n\n");
+
+    // Pointer subtraction
+
+    int myNumbers3[5] = {10, 20, 30, 40, 50};
+    int *start = &myNumbers3[1]; // points to 20
+    int *end = &myNumbers3[4];   // points to 50
+
+    printf("%ld\n", end - start); // 3 elements apart
+
+    printf("\n------------------------\n\n");
+
+    // Pointer Arithmetic with Different Data Types
+
+    /*
+    An int pointer increases by 4 bytes (size of int)
+    A char pointer increases by 1 byte (size of char)
+    */
+
+    int myNumbers4[2] = {1, 2};
+    char letters[] = "Hi"; // 'H', 'i', '\0'
+
+    int *pi = myNumbers4; // int pointer
+    char *pc = letters;   // char pointer
+
+    printf("%p\n", (void *)pi);
+    printf("%p\n", (void *)(pi + 1)); // moves by sizeof(int) (4 bytes)
+    printf("%p\n", (void *)(pi + 2)); // moves by sizeof(int) (4 bytes)
+
+    printf("%p\n", (void *)pc);
+    printf("%p\n", (void *)(pc + 1)); // moves by 1 byte
+
+    printf("\n------------------------\n\n");
+
+    // Looping with pointers
+
+    int myNumbers5[4] = {25, 50, 75, 100};
+    int *p5 = myNumbers5; // start of array
+
+    for (int i = 0; i < 4; i++)
+    {
+        printf("%d\n", *p5);
+        p5++; // move to next element
+    }
+
+    printf("\n------------------------\n\n");
+
+    // Pointer to Pointer
+    int myNum = 10;
+    int *myNumPtr = &myNum;
+    int **myNumPtrPtr = &myNumPtr;
+
+    printf("myNum = %d\n", myNum);
+    printf("*myNumPtr = %d\n", *myNumPtr);
+    printf("**myNumPtrPtr = %d\n", **myNumPtrPtr);
+
+    **myNumPtrPtr = 20; // change myNum via pointer to pointer
+    printf("myNum = %d\n", myNum);
 
     return 0;
 }
