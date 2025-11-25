@@ -3,7 +3,6 @@
 int main()
 {
     // Memory Address
-
     int myAge = 26;
     printf("%d\n", myAge);  // Outputs 26
     printf("%p\n", &myAge); // Outputs 00000000005FFE7C
@@ -26,7 +25,6 @@ int main()
     printf("\n------------------------\n\n");
 
     // Pointers and Arrays
-
     int myNumbers[4] = {10, 20, 30, 40};
     int i;
 
@@ -59,7 +57,6 @@ int main()
     printf("\n------------------------\n\n");
 
     // Pointer Arithmetic
-
     int myNumbers1[4] = {10, 20, 30, 40};
     int *p1 = myNumbers1; // Points to myNumbers[0]
 
@@ -71,7 +68,6 @@ int main()
     printf("\n------------------------\n\n");
 
     // Moving the pointer with increment and decrement operators
-
     int myNumbers2[3] = {10, 20, 30};
     int *p2 = myNumbers2; // myNumbers[0]
 
@@ -86,7 +82,6 @@ int main()
     printf("\n------------------------\n\n");
 
     // Pointer subtraction
-
     int myNumbers3[5] = {10, 20, 30, 40, 50};
     int *start = &myNumbers3[1]; // points to 20
     int *end = &myNumbers3[4];   // points to 50
@@ -118,7 +113,6 @@ int main()
     printf("\n------------------------\n\n");
 
     // Looping with pointers
-
     int myNumbers5[4] = {25, 50, 75, 100};
     int *p5 = myNumbers5; // start of array
 
