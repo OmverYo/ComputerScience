@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int main()
 {
@@ -70,9 +71,18 @@ int main()
     Unlike malloc(), the calloc() function writes zeroes into all of the allocated memory. However, this makes calloc() slightly less efficient.
     */
 
+    printf("--------------------------\n");
+
     int *ptr1, *ptr2;
     ptr1 = malloc(sizeof(*ptr1));
     ptr2 = calloc(1, sizeof(*ptr2));
+    printf("Size allocated by malloc: %zu bytes\n", sizeof(*ptr1)); // 4 bytes
+    printf("Size allocated by calloc: %zu bytes\n", sizeof(*ptr2)); // 4 bytes
+
+    int *myStudents;
+    int numStudents = 12;
+    myStudents = calloc(numStudents, sizeof(*myStudents));
+    printf("%d", numStudents * sizeof(*myStudents)); // 48 bytes
 
     return 0;
 }
